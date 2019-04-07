@@ -31,6 +31,16 @@ export class Login extends React.Component {
       // call the login method from this.props.auth
       // and pass the user and password
       // display any errors if no result.token comes back
+      this.props.auth.login(user, password)
+      .then((result) => {
+        if (!result.token) {
+          this.setState({ loginError: result.message })
+        }
+        else {
+          localStorage.setItem('token', result.token)
+          this.context.router.push('/home')
+        }
+      })
     }
   }
 
@@ -41,6 +51,16 @@ export class Login extends React.Component {
       // call the signup method from this.props.auth
       // and pass the username, email, and password
       // display any errors if no result.token comes back
+      this.props.auth.signup(username, email, password)
+      .then(({ token }) => {
+        if (!result.token) {
+          this.setState({ loginError: result.message })
+        }
+        else {
+          localStorage.setItem('token', token)
+          this.context.router.push('/home')
+        }
+      })
     }
   }
 
@@ -57,28 +77,28 @@ export class Login extends React.Component {
             <form onSubmit={this.onLoginSubmit.bind(this)}>
               <FormGroup controlId="user">
                 <ControlLabel>Username/Email</ControlLabel>
-                <FormControl 
+                <FormControl
                   type="text"
-                  placeholder="Enter your username or email" 
+                  placeholder="Enter your username or email"
                   name="user"
-                  value={this.state.user} 
+                  value={this.state.user}
                   onChange={this.handleChange.bind(this)}
                 />
               </FormGroup>
               <FormGroup controlId="user">
                 <ControlLabel>Password</ControlLabel>
-                <FormControl 
+                <FormControl
                   type="password"
-                  placeholder="Enter your password" 
-                  name="password" 
-                  value={this.state.password} 
+                  placeholder="Enter your password"
+                  name="password"
+                  value={this.state.password}
                   onChange={this.handleChange.bind(this)}
                 />
               </FormGroup>
 
               <Button bsStyle="primary" type="submit">Submit</Button>
               </form>
-              { this.state.loginError && 
+              { this.state.loginError &&
                 <Alert bsStyle="danger">{this.state.loginError}</Alert>
               }
           </Tab>
@@ -86,37 +106,37 @@ export class Login extends React.Component {
             <form onSubmit={this.onSignupSubmit.bind(this)}>
               <FormGroup controlId="user">
                 <ControlLabel>Username</ControlLabel>
-                <FormControl 
+                <FormControl
                   type="text"
-                  placeholder="Enter your username" 
-                  name="username" 
-                  value={this.state.username} 
+                  placeholder="Enter your username"
+                  name="username"
+                  value={this.state.username}
                   onChange={this.handleChange.bind(this)}
                 />
               </FormGroup>
               <FormGroup controlId="user">
                 <ControlLabel>Email</ControlLabel>
-                <FormControl 
+                <FormControl
                   type="text"
-                  placeholder="Enter your email" 
-                  name="email" 
-                  value={this.state.email} 
-                  onChange={this.handleChange.bind(this)}  
+                  placeholder="Enter your email"
+                  name="email"
+                  value={this.state.email}
+                  onChange={this.handleChange.bind(this)}
                 />
               </FormGroup>
               <FormGroup controlId="user">
                 <ControlLabel>Password</ControlLabel>
-                <FormControl 
+                <FormControl
                   type="password"
-                  placeholder="Enter your password" 
-                  name="password" 
-                  value={this.state.password} 
-                  onChange={this.handleChange.bind(this)}  
+                  placeholder="Enter your password"
+                  name="password"
+                  value={this.state.password}
+                  onChange={this.handleChange.bind(this)}
                 />
               </FormGroup>
               <Button bsStyle="primary" type="submit">Submit</Button>
             </form>
-            { this.state.signupError && 
+            { this.state.signupError &&
               <Alert bsStyle="danger">{this.state.signupError}</Alert>
             }
           </Tab>

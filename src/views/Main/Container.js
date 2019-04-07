@@ -1,5 +1,5 @@
 import React, { PropTypes as T } from 'react'
-import { Nav, Navbar, NavItem, Header, Brand } from 'react-bootstrap'
+import { Nav, Navbar, NavItem, Header, Brand, Button } from 'react-bootstrap'
 import { Link } from 'react-router'
 import { LinkContainer } from 'react-router-bootstrap'
 import AuthService from 'utils/AuthService'
@@ -37,7 +37,10 @@ export class Container extends React.Component {
           <Nav>
           </Nav>
           <Nav pullRight>
-            // provide login and logout links. Hint: use LinkContainer
+            <LinkContainer to={'/login'}>
+              <Button>Login</Button>
+            </LinkContainer>
+            <Button onClick={this.logout.bind(this)}>Logout</Button>
           </Nav>
         </Navbar>
         <div className="container">

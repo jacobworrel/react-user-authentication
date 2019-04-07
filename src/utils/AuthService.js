@@ -14,8 +14,8 @@ export default class AuthService extends EventEmitter {
   }
 
   _doAuthentication(endpoint, values) {
-    return this.fetch(`${API_URL}/${endpoint}`, { 
-      method: 'POST', 
+    return this.fetch(`${API_URL}/${endpoint}`, {
+      method: 'POST',
       body: JSON.stringify(values),
       headers: { 'Content-Type': 'application/json' }
     })
@@ -39,6 +39,9 @@ export default class AuthService extends EventEmitter {
 
   // provide a logout method which clears the token
   // from local storage
+  logout () {
+    return localStorage.removeItem('token');
+  }
 
   fetch(url, options) {
     // performs api calls sending the required authentication headers
