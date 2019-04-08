@@ -32,10 +32,28 @@ export class Instructor extends React.Component {
     this.state = {
       instructors: []
     }
+  }
+  componentDidMount () {
     // fetch the list of instructors from the /instructors endpoint
+    fetch(`${API_URL}/instructors`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.props.auth.getToken()}`
+      }
+    })
+    .then(resp => resp.json())
+    .then(instructors => this.setState({ instructors }))
   }
 
   onAddInstructorClick() {
+    fetch(`${API_URL}/instructors`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.props.auth.getToken()}`
+      }
+    })
     this.context.router.push('/instructor/new')
   }
 

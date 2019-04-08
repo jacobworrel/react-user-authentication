@@ -31,6 +31,15 @@ export class NewInstructor extends React.Component {
     const data = { first_name, last_name, email, company }
     // send a POST request to the /instructors endpoint
     // with the data object and return the instructors view when complete
+    fetch(`${API_URL}/instructors`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.props.auth.getToken()}`
+      },
+      body: JSON.stringify(data),
+    })
+    .then(_ => this.context.router.push('/instructor'))
   }
 
   render() {
@@ -38,49 +47,49 @@ export class NewInstructor extends React.Component {
       <Col sm={6} smOffset={3}>
         <FormGroup controlId="first_name">
           <ControlLabel>First Name</ControlLabel>
-          <FormControl 
+          <FormControl
             type="text"
-            placeholder="First name" 
+            placeholder="First name"
             name="first_name"
-            value={this.state.first_name} 
+            value={this.state.first_name}
             onChange={this.handleChange.bind(this)}
             required
           />
         </FormGroup>
         <FormGroup controlId="first_name">
           <ControlLabel>Last Name</ControlLabel>
-          <FormControl 
+          <FormControl
             type="text"
-            placeholder="Last name" 
+            placeholder="Last name"
             name="last_name"
-            value={this.state.last_name} 
+            value={this.state.last_name}
             onChange={this.handleChange.bind(this)}
             required
           />
         </FormGroup>
         <FormGroup controlId="email">
           <ControlLabel>Email</ControlLabel>
-          <FormControl 
+          <FormControl
             type="text"
-            placeholder="Email address" 
+            placeholder="Email address"
             name="email"
-            value={this.state.email} 
+            value={this.state.email}
             onChange={this.handleChange.bind(this)}
             required
           />
         </FormGroup>
         <FormGroup controlId="company">
           <ControlLabel>Company</ControlLabel>
-          <FormControl 
+          <FormControl
             type="text"
-            placeholder="Company Name" 
+            placeholder="Company Name"
             name="company"
-            value={this.state.company} 
+            value={this.state.company}
             onChange={this.handleChange.bind(this)}
             required
           />
         </FormGroup>
-        { this.state.error && 
+        { this.state.error &&
           <Alert bsStyle="danger">{this.state.error.message}</Alert>
         }
         <Button bsStyle="primary" onClick={this.onNewInstructorSubmit.bind(this)}>Submit</Button>

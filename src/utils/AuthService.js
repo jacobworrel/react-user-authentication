@@ -14,8 +14,8 @@ export default class AuthService extends EventEmitter {
   }
 
   _doAuthentication(endpoint, values) {
-    return this.fetch(`${API_URL}/${endpoint}`, { 
-      method: 'POST', 
+    return this.fetch(`${API_URL}/${endpoint}`, {
+      method: 'POST',
       body: JSON.stringify(values),
       headers: { 'Content-Type': 'application/json' }
     })
@@ -26,7 +26,7 @@ export default class AuthService extends EventEmitter {
   }
 
   signup(username, email, password) {
-    return this._doAuthentication('users', { username, email, password })
+    return this._doAuthentication('users', { username, email, password, admin: true })
   }
 
   isAuthenticated() {
