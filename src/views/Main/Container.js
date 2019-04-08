@@ -17,6 +17,8 @@ export class Container extends React.Component {
   }
 
   render() {
+    const { isAuthenticated, getToken } = this.props.route.auth;
+    console.log('auth?', isAuthenticated(getToken()))
     let children = null
     if (this.props.children) {
       children = React.cloneElement(this.props.children, {
@@ -37,12 +39,17 @@ export class Container extends React.Component {
           <Nav>
           </Nav>
           <Nav pullRight>
-            <LinkContainer to={'/home'}>
-              <NavItem onClick={this.logout.bind(this)}>Log Out</NavItem>
-            </LinkContainer>
-            <LinkContainer to={'/login'}>
-              <NavItem>Log In</NavItem>
-            </LinkContainer>
+            {
+              isAuthenticated(getToken()) ? (
+                <LinkContainer to={'/home'}>
+                  <NavItem onClick={this.logout.bind(this)}>Log Out</NavItem>
+                </LinkContainer>
+              ) : (
+                <LinkContainer to={'/login'}>
+                  <NavItem>Log In</NavItem>
+                </LinkContainer>
+              )
+            }
           </Nav>
         </Navbar>
         <div className="container">

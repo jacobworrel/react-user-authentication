@@ -14,8 +14,8 @@ export default class AuthService extends EventEmitter {
   }
 
   _doAuthentication(endpoint, values) {
-    return this.fetch(`${API_URL}/${endpoint}`, { 
-      method: 'POST', 
+    return this.fetch(`${API_URL}/${endpoint}`, {
+      method: 'POST',
       body: JSON.stringify(values),
       headers: { 'Content-Type': 'application/json' }
     })
@@ -31,6 +31,17 @@ export default class AuthService extends EventEmitter {
 
   // add an isAuthenticated method to check whether
   // the user's JWT has expired
+
+  isAuthenticated(token) {
+    if (!token) {
+      return false;
+    }
+    else {
+      const { exp } = jwtDecode(token) || {};
+      const now = Math.floor(Date.now() / 1000);
+      return exp > now;
+    }
+  }
 
   finishAuthentication(token) {
     localStorage.setItem('token', token)
